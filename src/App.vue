@@ -1,7 +1,14 @@
 <template>
   <div id="nav">
-    <router-link to="/">Атбаш</router-link>
+    <router-link class="link" to="/atbash">Атбаш</router-link>
+    <router-link class="link" to="/caesar">Цезарь</router-link>
+    <router-link class="link" to="/caesar">Ришелье</router-link>
   </div>
-  <router-view/>
+  <router-view />
 </template>
 
+<style>
+.link {
+  margin-right: 10px;
+}
+</style>

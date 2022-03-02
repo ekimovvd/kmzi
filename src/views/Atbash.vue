@@ -1,13 +1,23 @@
 <template>
   <div class="atbash">
     <div class="atbash__card">
-      <input type="text" class="atbash__input" v-model="encode" />
+      <input
+        type="text"
+        placeholder="Введите сообщение"
+        class="atbash__input"
+        v-model="encode"
+      />
       <button type="button" class="atbash__btn" @click="handleEncode">
         Зашифровать
       </button>
     </div>
     <div class="atbash__card">
-      <input type="text" class="atbash__input" v-model="decode" />
+      <input
+        type="text"
+        placeholder="Введите сообщение"
+        class="atbash__input"
+        v-model="decode"
+      />
       <button type="button" class="atbash__btn" @click="handleDecode">
         Расшифровать
       </button>
@@ -78,20 +88,16 @@ export default {
 };
 </script>
 
-<style lang="scss">
+<style>
 .atbash {
   padding: 10px;
+}
 
-  &__card {
-    margin-bottom: 10px;
+.atbash__card {
+  margin-bottom: 10px;
+}
 
-    &:last-child {
-      margin-bottom: 0;
-    }
-  }
-
-  &__btn {
-    margin-left: 10px;
-  }
+.atbash__btn {
+  margin-left: 10px;
 }
 </style>
