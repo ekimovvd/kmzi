@@ -21,6 +21,11 @@ const routes = [
     name: "Gronsfeld",
     component: () => import("../views/Gronsfeld.vue"),
   },
+  {
+    path: "/visener",
+    name: "Visener",
+    component: () => import("../views/Visener.vue"),
+  },
 ];
 
 const router = createRouter({
