@@ -1,9 +1,24 @@
 <template>
   <div class="richelieu">
     <div class="richelieu__block">
-      <input class="richelieu__input" type="text" v-model="encode" />
-      <input class="richelieu__input" type="text" v-model="decode" />
-      <input class="richelieu__input" type="text" v-model="key" />
+      <input
+        class="richelieu__input"
+        type="text"
+        placeholder="Введите текст для шифрование"
+        v-model="encode"
+      />
+      <input
+        class="richelieu__input"
+        type="text"
+        placeholder="Введите текст для расшифрования"
+        v-model="decode"
+      />
+      <input
+        class="richelieu__input"
+        type="text"
+        placeholder="Введите ключ"
+        v-model="key"
+      />
       <button @click="handleEncode">Зашифровать</button>
       <button @click="handleDecode">Расшифровать</button>
       <p>encodeStr: {{ encodeStr }}</p>

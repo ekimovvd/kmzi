@@ -58,6 +58,13 @@ export default {
       arrayEncode.forEach((symbol) => {
         if (this.arr_ru.includes(symbol)) {
           let key = this.key;
+
+          if (key < 0) {
+            while (key < 0) {
+              key += 33;
+            }
+          }
+
           let shift = this.arr_ru.indexOf(symbol) + key;
           let len = this.arr_ru.length;
 
@@ -68,6 +75,13 @@ export default {
           }
         } else if (this.arr_RU.includes(symbol)) {
           let key = this.key;
+
+          if (key < 0) {
+            while (key < 0) {
+              key += 33;
+            }
+          }
+
           let shift = this.arr_RU.indexOf(symbol) + key;
           let len = this.arr_RU.length;
 
@@ -78,6 +92,13 @@ export default {
           }
         } else if (this.arr_en.includes(symbol)) {
           let key = this.key;
+
+          if (key < 0) {
+            while (key < 0) {
+              key += 26;
+            }
+          }
+
           let shift = this.arr_en.indexOf(symbol) + key;
           let len = this.arr_en.length;
 
@@ -88,6 +109,13 @@ export default {
           }
         } else if (this.arr_EN.includes(symbol)) {
           let key = this.key;
+
+          if (key < 0) {
+            while (key < 0) {
+              key += 26;
+            }
+          }
+
           let shift = this.arr_EN.indexOf(symbol) + key;
           let len = this.arr_EN.length;
 

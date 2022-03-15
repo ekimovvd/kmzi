@@ -16,6 +16,11 @@ const routes = [
     name: "Richelieu",
     component: () => import("../views/Richelieu.vue"),
   },
+  {
+    path: "/gronsfeld",
+    name: "Gronsfeld",
+    component: () => import("../views/Gronsfeld.vue"),
+  },
 ];
 
 const router = createRouter({
