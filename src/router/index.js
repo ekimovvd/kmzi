@@ -11,6 +11,11 @@ const routes = [
     name: "Caesar",
     component: () => import("../views/Caesar.vue"),
   },
+  {
+    path: "/richelieu",
+    name: "Richelieu",
+    component: () => import("../views/Richelieu.vue"),
+  },
 ];
 
 const router = createRouter({

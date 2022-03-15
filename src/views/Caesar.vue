@@ -27,7 +27,7 @@
         type="number"
         placeholder="Введите сдвиг"
         class="caesar__input"
-        v-model="shift"
+        v-model="key"
       />
     </div>
     <p>Результат: {{ result }}</p>
@@ -41,7 +41,7 @@ export default {
     return {
       encode: "",
       decode: "",
-      shift: 0,
+      key: 0,
       result: "",
       arr_ru: "абвгдеёжзийклмнопрстуфхцчшщъыьэюя",
       arr_RU: "АБВГДЕЁЖЗИЙКЛМНОПРСТУФХЦЧШЩЪЫЬЭЮЯ",
@@ -57,40 +57,44 @@ export default {
 
       arrayEncode.forEach((symbol) => {
         if (this.arr_ru.includes(symbol)) {
-          let index = this.arr_ru.indexOf(symbol) + this.shift;
+          let key = this.key;
+          let shift = this.arr_ru.indexOf(symbol) + key;
           let len = this.arr_ru.length;
 
-          if (index < 0) {
-            result += this.arr_ru[len + index];
+          if (shift < 0) {
+            result += this.arr_ru[len + shift];
           } else {
-            result += this.arr_ru[index % len];
+            result += this.arr_ru[shift % len];
           }
         } else if (this.arr_RU.includes(symbol)) {
-          let index = this.arr_RU.indexOf(symbol) + this.shift;
+          let key = this.key;
+          let shift = this.arr_RU.indexOf(symbol) + key;
           let len = this.arr_RU.length;
 
-          if (index < 0) {
-            result += this.arr_RU[len + index];
+          if (shift < 0) {
+            result += this.arr_RU[len + shift];
           } else {
-            result += this.arr_RU[index % len];
+            result += this.arr_RU[shift % len];
           }
         } else if (this.arr_en.includes(symbol)) {
-          let index = this.arr_en.indexOf(symbol) + this.shift;
+          let key = this.key;
+          let shift = this.arr_en.indexOf(symbol) + key;
           let len = this.arr_en.length;
 
-          if (index < 0) {
-            result += this.arr_en[len + index];
+          if (shift < 0) {
+            result += this.arr_en[len + shift];
           } else {
-            result += this.arr_en[index % len];
+            result += this.arr_en[shift % len];
           }
         } else if (this.arr_EN.includes(symbol)) {
-          let index = this.arr_EN.indexOf(symbol) + this.shift;
+          let key = this.key;
+          let shift = this.arr_EN.indexOf(symbol) + key;
           let len = this.arr_EN.length;
 
-          if (index < 0) {
-            result += this.arr_EN[len + index];
+          if (shift < 0) {
+            result += this.arr_EN[len + shift];
           } else {
-            result += this.arr_EN[index % len];
+            result += this.arr_EN[shift % len];
           }
         } else {
           result += symbol;
@@ -107,40 +111,68 @@ export default {
 
       arrayDecode.forEach((symbol) => {
         if (this.arr_ru.includes(symbol)) {
-          let index = this.arr_ru.indexOf(symbol) - this.shift;
+          let key = this.key;
+          if (key > 33) {
+            while (key > 33) {
+              key -= 33;
+            }
+          }
+
+          let shift = this.arr_ru.indexOf(symbol) - key;
           let len = this.arr_ru.length;
 
-          if (index < 0) {
-            result += this.arr_ru[len + index];
+          if (shift < 0) {
+            result += this.arr_ru[len + shift];
           } else {
-            result += this.arr_ru[index % len];
+            result += this.arr_ru[shift % len];
           }
         } else if (this.arr_RU.includes(symbol)) {
-          let index = this.arr_RU.indexOf(symbol) - this.shift;
+          let key = this.key;
+          if (key > 33) {
+            while (key > 33) {
+              key -= 33;
+            }
+          }
+
+          let shift = this.arr_RU.indexOf(symbol) - key;
           let len = this.arr_RU.length;
 
-          if (index < 0) {
-            result += this.arr_RU[len + index];
+          if (shift < 0) {
+            result += this.arr_RU[len + shift];
           } else {
-            result += this.arr_RU[index % len];
+            result += this.arr_RU[shift % len];
           }
         } else if (this.arr_en.includes(symbol)) {
-          let index = this.arr_en.indexOf(symbol) - this.shift;
+          let key = this.key;
+          if (key > 26) {
+            while (key > 26) {
+              key -= 26;
+            }
+          }
+
+          let shift = this.arr_en.indexOf(symbol) - key;
           let len = this.arr_en.length;
 
-          if (index < 0) {
-            result += this.arr_en[len + index];
+          if (shift < 0) {
+            result += this.arr_en[len + shift];
           } else {
-            result += this.arr_en[index % len];
+            result += this.arr_en[shift % len];
           }
         } else if (this.arr_EN.includes(symbol)) {
-          let index = this.arr_EN.indexOf(symbol) - this.shift;
+          let key = this.key;
+          if (key > 26) {
+            while (key > 26) {
+              key -= 26;
+            }
+          }
+
+          let shift = this.arr_EN.indexOf(symbol) - key;
           let len = this.arr_EN.length;
 
-          if (index < 0) {
-            result += this.arr_EN[len + index];
+          if (shift < 0) {
+            result += this.arr_EN[len + shift];
           } else {
-            result += this.arr_EN[index % len];
+            result += this.arr_EN[shift % len];
           }
         } else {
           result += symbol;
