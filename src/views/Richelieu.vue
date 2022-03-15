@@ -17,9 +17,9 @@ export default {
   name: "Richelieu",
   data() {
     return {
-      encode: "LET TO DIE",
-      decode: "E TLO TEDI",
-      key: "3,0,2,1 2,0,1 1,2,0",
+      encode: "LETTER SENT TO THE EMPEROR GIVING FULL DETAIL",
+      decode: "TLRT EESN TE EM HTOTEOPE RRIGVING FULL DETAIL",
+      key: "1,6,3,0,5,2,4 0,4,1,3,2 5,6,0,7,4,1,3,8,2 1,2,5,0,4,3 1,0",
       encodeStr: null,
       decodeStr: null,
     };
@@ -176,8 +176,8 @@ export default {
           const decodeObj = {};
           const blockKey = keyArraySub[blockIndex];
           blockKey.forEach((key, keyIndex) => {
-            if (blockStr[keyIndex]) {
-              decodeObj[key] = blockStr[keyIndex];
+            if (blockStr[key]) {
+              decodeObj[keyIndex] = blockStr[key];
             }
           });
           decodeArrayObj.push(decodeObj);
