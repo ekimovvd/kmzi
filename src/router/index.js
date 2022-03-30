@@ -26,6 +26,11 @@ const routes = [
     name: "Visener",
     component: () => import("../views/Visener.vue"),
   },
+  {
+    path: "/playfair",
+    name: "Playfair",
+    component: () => import("../views/Playfair.vue"),
+  },
 ];
 
 const router = createRouter({

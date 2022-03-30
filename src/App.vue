@@ -5,6 +5,7 @@
     <router-link class="link" to="/richelieu">Ришелье</router-link>
     <router-link class="link" to="/gronsfeld">Гронсфельд</router-link>
     <router-link class="link" to="/visener">Виженер</router-link>
+    <router-link class="link" to="/playfair">Плейфер</router-link>
   </div>
   <router-view />
 </template>
