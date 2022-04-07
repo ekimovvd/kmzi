@@ -14,6 +14,8 @@ const playfair = {
       objectsSymbol[element] = count + 1;
     });
 
+    console.log("KeyCorrect: ", objectsSymbol);
+
     return Object.keys(objectsSymbol)
       .map((item) => item)
       .join("");
@@ -32,6 +34,7 @@ const playfair = {
   },
   createMatrix: (key) => {
     alphabet = playfair.alphabetCorrect(key);
+    console.log("Alphabet: ", alphabet);
 
     specialSymbol = size === 5 ? "x" : "х";
 
@@ -101,6 +104,7 @@ const playfair = {
   },
   findBigramFromMatrix: (matrix, bigram) => {
     bigram = bigram.split("");
+    console.log("Bigram: ", bigram);
 
     return bigram.map((element) => {
       for (let i = 0; i < size; i++) {
@@ -178,6 +182,7 @@ const playfair = {
 
     bigrams.forEach((bigram) => {
       let bigramInfo = playfair.findBigramFromMatrix(matrix, bigram);
+      console.log("BigramInfo: ", bigramInfo);
       textEncrypt += playfair.buildStrEncrypt(matrix, bigramInfo);
     });
 
