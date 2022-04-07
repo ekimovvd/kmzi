@@ -1,4 +1,7 @@
-import { createRouter, createWebHistory } from "vue-router";
+import Vue from "vue";
+import VueRouter from "vue-router";
+
+Vue.use(VueRouter);
 
 const routes = [
   {
@@ -31,10 +34,16 @@ const routes = [
     name: "Playfair",
     component: () => import("../views/Playfair.vue"),
   },
+  {
+    path: "/frequency",
+    name: "Frequency",
+    component: () => import("../views/Frequency.vue"),
+  },
 ];
 
-const router = createRouter({
-  history: createWebHistory(process.env.BASE_URL),
+const router = new VueRouter({
+  mode: "history",
+  base: process.env.BASE_URL,
   routes,
 });
 
