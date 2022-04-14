@@ -4,12 +4,14 @@
       <div class="frequency__inputs">
         <textarea
           class="frequency__textarea"
+          placeholder="Введите текст"
           cols="30"
           rows="10"
           v-model="text"
         ></textarea>
         <textarea
           class="frequency__textarea"
+          placeholder="Расшифрованный текст"
           cols="30"
           rows="10"
           v-model="textDecrypt"
@@ -39,11 +41,27 @@
         <div class="frequency__group">
           <button
             class="frequency__btn frequency__btn_txt"
+            @click="handleAnalysis"
+          >
+            Произвести анализ
+          </button>
+        </div>
+        <div class="frequency__group">
+          <button
+            class="frequency__btn frequency__btn_txt"
             @click="handleDecrypt"
           >
             Расшифровать
           </button>
         </div>
+      </div>
+      <div class="playfair__group">
+        <input type="radio" id="ru" value="Русский" v-model="lang" />
+        <label for="ru"> Русский язык </label>
+      </div>
+      <div class="playfair__group">
+        <input type="radio" id="en" value="Английский" v-model="lang" />
+        <label for="en"> Английский язык </label>
       </div>
     </div>
     <Bar
@@ -61,7 +79,6 @@
       :rows="getRows"
       @handleOption="handleOption"
     />
-    {{ getRows }}
   </div>
 </template>
 
@@ -118,6 +135,7 @@ export default {
         responsive: true,
         maintainAspectRatio: false,
       },
+      lang: "Русский",
       alphabetRu: [
         {
           symbol: "о",
@@ -256,6 +274,112 @@ export default {
           frequency: 0.00013,
         },
       ],
+      alphabetEn: [
+        {
+          symbol: "e",
+          frequency: 0.123,
+        },
+        {
+          symbol: "t",
+          frequency: 0.096,
+        },
+        {
+          symbol: "a",
+          frequency: 0.081,
+        },
+        {
+          symbol: "o",
+          frequency: 0.079,
+        },
+        {
+          symbol: "n",
+          frequency: 0.072,
+        },
+        {
+          symbol: "i",
+          frequency: 0.071,
+        },
+        {
+          symbol: "s",
+          frequency: 0.066,
+        },
+        {
+          symbol: "r",
+          frequency: 0.06,
+        },
+        {
+          symbol: "h",
+          frequency: 0.051,
+        },
+        {
+          symbol: "l",
+          frequency: 0.04,
+        },
+        {
+          symbol: "d",
+          frequency: 0.036,
+        },
+        {
+          symbol: "c",
+          frequency: 0.032,
+        },
+        {
+          symbol: "u",
+          frequency: 0.031,
+        },
+        {
+          symbol: "p",
+          frequency: 0.023,
+        },
+        {
+          symbol: "f",
+          frequency: 0.023,
+        },
+        {
+          symbol: "m",
+          frequency: 0.022,
+        },
+        {
+          symbol: "w",
+          frequency: 0.02,
+        },
+        {
+          symbol: "y",
+          frequency: 0.019,
+        },
+        {
+          symbol: "b",
+          frequency: 0.0161,
+        },
+        {
+          symbol: "g",
+          frequency: 0.016,
+        },
+        {
+          symbol: "v",
+          frequency: 0.009,
+        },
+        {
+          symbol: "k",
+          frequency: 0.005,
+        },
+        {
+          symbol: "й",
+          frequency: 0.01208,
+        },
+        {
+          symbol: "q",
+          frequency: 0.002,
+        },
+        {
+          symbol: "j",
+          frequency: 0.0011,
+        },
+        {
+          symbol: "z",
+          frequency: 0.001,
+        },
+      ],
     };
   },
   mounted() {
@@ -286,17 +410,31 @@ export default {
           frequency: this.probability[key],
         };
       });
-      return this.alphabetRu.map((obj, index) => {
-        return {
-          symbol: this.probabilityArr[index]
-            ? this.probabilityArr[index].symbol
-            : "",
-          frequency: this.probabilityArr[index]
-            ? this.probabilityArr[index].frequency
-            : "",
-          select: obj,
-        };
-      });
+      if (this.lang === "Русский") {
+        return this.alphabetRu.map((obj, index) => {
+          return {
+            symbol: this.probabilityArr[index]
+              ? this.probabilityArr[index].symbol
+              : "",
+            frequency: this.probabilityArr[index]
+              ? this.probabilityArr[index].frequency
+              : "",
+            select: obj,
+          };
+        });
+      } else {
+        return this.alphabetEn.map((obj, index) => {
+          return {
+            symbol: this.probabilityArr[index]
+              ? this.probabilityArr[index].symbol
+              : "",
+            frequency: this.probabilityArr[index]
+              ? this.probabilityArr[index].frequency
+              : "",
+            select: obj,
+          };
+        });
+      }
     },
   },
   methods: {
@@ -321,17 +459,31 @@ export default {
     handleOption(event) {
       const { first, next } = event;
 
-      const findSymbolFirst = this.alphabetRu.find(
-        (obj) => obj.symbol === first.symbol
-      );
-      const findSymbolFirstIndex = this.alphabetRu.indexOf(findSymbolFirst);
+      if (this.lang === "Русский") {
+        const findSymbolFirst = this.alphabetRu.find(
+          (obj) => obj.symbol === first.symbol
+        );
+        const findSymbolFirstIndex = this.alphabetRu.indexOf(findSymbolFirst);
 
-      const findSymbolNext = this.alphabetRu.find(
-        (obj) => obj.symbol === next.symbol
-      );
-      const findSymbolNextIndex = this.alphabetRu.indexOf(findSymbolNext);
-      this.alphabetRu.splice(findSymbolFirstIndex, 1, next);
-      this.alphabetRu.splice(findSymbolNextIndex, 1, first);
+        const findSymbolNext = this.alphabetRu.find(
+          (obj) => obj.symbol === next.symbol
+        );
+        const findSymbolNextIndex = this.alphabetRu.indexOf(findSymbolNext);
+        this.alphabetRu.splice(findSymbolFirstIndex, 1, next);
+        this.alphabetRu.splice(findSymbolNextIndex, 1, first);
+      } else {
+        const findSymbolFirst = this.alphabetEn.find(
+          (obj) => obj.symbol === first.symbol
+        );
+        const findSymbolFirstIndex = this.alphabetEn.indexOf(findSymbolFirst);
+
+        const findSymbolNext = this.alphabetEn.find(
+          (obj) => obj.symbol === next.symbol
+        );
+        const findSymbolNextIndex = this.alphabetEn.indexOf(findSymbolNext);
+        this.alphabetEn.splice(findSymbolFirstIndex, 1, next);
+        this.alphabetEn.splice(findSymbolNextIndex, 1, first);
+      }
     },
 
     handleInitSocket() {
@@ -343,18 +495,21 @@ export default {
         .addEventListener("click", siofu.prompt, false);
       siofu.listenOnInput(document.getElementById("input_doc"));
 
-      siofu.addEventListener("complete", function (event) {
-        console.log(event.success);
-        console.log(event.file);
-      });
-
       socket.on("FILE:UPLOAD", (response) => {
-        console.log(response);
+        this.handleFrequency(response);
+        this.handleCountSymbols();
+        this.handleProbability();
       });
     },
 
     handleFileTxt() {
       this.$refs.input_txt.click();
+    },
+
+    handleAnalysis() {
+      this.handleFrequency(this.text);
+      this.handleCountSymbols();
+      this.handleProbability();
     },
 
     async handleFileTxtRead() {
@@ -420,6 +575,10 @@ export default {
 <style>
 .frequency__table {
   margin-right: 20px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-top: 20px;
 }
 
 .frequency__bar {
@@ -444,6 +603,14 @@ canvas {
   justify-content: center;
 }
 
+.frequency__group {
+  margin-bottom: 15px;
+}
+
+.frequency__group:last-child {
+  margin-bottom: 0;
+}
+
 .frequency__buttons {
   display: flex;
   flex-direction: column;
@@ -458,7 +625,6 @@ canvas {
   outline: none;
   text-align: center;
   cursor: pointer;
-  margin-bottom: 15px;
 }
 
 .frequency__btn:last-child {
