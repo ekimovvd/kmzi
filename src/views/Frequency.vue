@@ -54,6 +54,29 @@
             Расшифровать
           </button>
         </div>
+        <div class="frequency__group">
+          <input
+            id="import_text"
+            ref="import_text"
+            type="file"
+            accept=".json"
+            @change="handleImportText"
+          />
+          <button
+            class="frequency__btn frequency__btn_txt"
+            @click="handleImport"
+          >
+            Импортировать json
+          </button>
+        </div>
+        <div class="frequency__group">
+          <button
+            class="frequency__btn frequency__btn_txt"
+            @click="handleExport"
+          >
+            Экспортировать json
+          </button>
+        </div>
       </div>
       <div class="playfair__group">
         <input type="radio" id="ru" value="Русский" v-model="lang" />
@@ -83,6 +106,7 @@
 </template>
 
 <script>
+import FileSaver from "file-saver";
 import SocketIOFileUpload from "socketio-file-upload";
 import { Bar } from "vue-chartjs/legacy";
 
@@ -438,7 +462,28 @@ export default {
     },
   },
   methods: {
+    handleExport() {
+      const data = JSON.stringify(this.probability);
+      const blob = new Blob([data], { type: "" });
+      FileSaver.saveAs(blob, "frequencyExport.json");
+    },
+
+    async handleImportText() {
+      const file = await this.$refs.import_text.files[0];
+      const reader = new FileReader();
+      reader.readAsText(file);
+      reader.onload = () => {
+        const json = JSON.parse(reader.result);
+        this.probability = json;
+      };
+    },
+
+    handleImport() {
+      this.$refs.import_text.click();
+    },
+
     handleDecrypt() {
+      this.textDecrypt = "";
       let text = this.text.toLowerCase().split("");
 
       const textArr = text.map((symbol) => {
@@ -515,9 +560,6 @@ export default {
     async handleFileTxtRead() {
       const text = await this.$refs.input_txt.files[0].text();
       this.text = text;
-      this.handleFrequency(text);
-      this.handleCountSymbols();
-      this.handleProbability();
     },
 
     handleFrequency(text) {
@@ -527,17 +569,21 @@ export default {
         .toLowerCase()
         .split("")
         .forEach((symbol) => {
-          if (arr_ru.includes(symbol)) {
-            if (this.frequency[symbol]) {
-              this.frequency[symbol] += 1;
-            } else {
-              this.frequency[symbol] = 1;
+          if (this.lang === "Русский") {
+            if (arr_ru.includes(symbol)) {
+              if (this.frequency[symbol]) {
+                this.frequency[symbol] += 1;
+              } else {
+                this.frequency[symbol] = 1;
+              }
             }
-          } else if (arr_en.includes(symbol)) {
-            if (this.frequency[symbol]) {
-              this.frequency[symbol] += 1;
-            } else {
-              this.frequency[symbol] = 1;
+          } else {
+            if (arr_en.includes(symbol)) {
+              if (this.frequency[symbol]) {
+                this.frequency[symbol] += 1;
+              } else {
+                this.frequency[symbol] = 1;
+              }
             }
           }
         });
