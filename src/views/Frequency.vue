@@ -17,6 +17,7 @@
           v-model="textDecrypt"
         ></textarea>
       </div>
+
       <div class="frequency__buttons">
         <div class="frequency__group">
           <button class="frequency__btn frequency__btn_doc" id="btn_doc">
@@ -463,7 +464,17 @@ export default {
   },
   methods: {
     handleExport() {
-      const data = JSON.stringify(this.probability);
+      const datatemp = {};
+      this.getRows.forEach((row) => {
+        datatemp[row.symbol] = row.frequency;
+      });
+
+      const data = JSON.stringify({
+        probability: this.probability,
+        probabilityArr: this.probabilityArr,
+        lang: this.lang,
+        alphabet: this.lang === "Русский" ? this.alphabetRu : this.alphabetEn,
+      });
       const blob = new Blob([data], { type: "" });
       FileSaver.saveAs(blob, "frequencyExport.json");
     },
@@ -474,7 +485,11 @@ export default {
       reader.readAsText(file);
       reader.onload = () => {
         const json = JSON.parse(reader.result);
-        this.probability = json;
+        if (json.lang === "Русский") {
+          this.alphabetRu = json.alphabet;
+        } else this.alphabetEn = json.alphabet;
+        this.probability = json.probability;
+        this.probabilityArr = json.probabilityArr;
       };
     },
 
