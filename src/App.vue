@@ -8,6 +8,7 @@
       <router-link class="link" to="/visener">Виженер</router-link>
       <router-link class="link" to="/playfair">Плейфер</router-link>
       <router-link class="link" to="/frequency">Частотный анализ</router-link>
+      <router-link class="link" to="/gamming">Гаммирование</router-link>
     </div>
     <router-view />
   </div>

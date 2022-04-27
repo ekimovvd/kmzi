@@ -39,6 +39,11 @@ const routes = [
     name: "Frequency",
     component: () => import("../views/Frequency.vue"),
   },
+  {
+    path: "/gamming",
+    name: "Gamming",
+    component: () => import("../views/Gamming.vue"),
+  },
 ];
 
 const router = new VueRouter({
